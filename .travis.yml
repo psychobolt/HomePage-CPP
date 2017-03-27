@@ -44,4 +44,4 @@ script:
   - npm run build.prod -- --base $APP_BASE
 
 after_script:
-  - gulp deploy.ftp -- --deploy.ftp.host $DEPLOY_HOST --deploy.ftp.user $DEPLOY_USER --deploy.ftp.password $DEPLOY_PASSWORD --deploy.ftp.dest $DEPLOY_DEST --deploy.ftp.ssh
+  - gulp deploy.ftp --deploy.ftp.host $DEPLOY_HOST --deploy.ftp.user $DEPLOY_USER --deploy.ftp.password $DEPLOY_PASSWORD --deploy.ftp.dest $DEPLOY_DEST --deploy.ftp.ssh
