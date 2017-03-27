@@ -12,17 +12,17 @@ os:
   - linux
   # - osx
 
-before_install:
-  # - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew update; fi
-  # - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew outdated xctool || brew upgrade xctool; fi
-  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then export CHROME_BIN=chromium-browser; fi  # Karma CI
-  # - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew cask install google-chrome; fi  # Karma CI
-  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then export DISPLAY=:99.0; fi
+# before_install:
+#   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew update; fi
+#   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew outdated xctool || brew upgrade xctool; fi
+#   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then export CHROME_BIN=chromium-browser; fi  # Karma CI
+#   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew cask install google-chrome; fi  # Karma CI
+#   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then export DISPLAY=:99.0; fi
 
 before_script:
   - npm install
-  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sh -e /etc/init.d/xvfb start; fi
-  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then nohup bash -c "webdriver-manager start 2>&1 &"; fi  # Protractor CI
+  # - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sh -e /etc/init.d/xvfb start; fi
+  # - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then nohup bash -c "webdriver-manager start 2>&1 &"; fi  # Protractor CI
 
 after_failure:
   - cat /home/travis/build/psychobolt/HomePage-CPP/npm-debug.log
@@ -44,4 +44,4 @@ script:
   - npm run build.prod -- --base $APP_BASE
 
 after_script:
-  - npm run deploy.ftp -- --deploy.ftp.host $DEPLOY_HOST --deploy.ftp.user $DEPLOY_USER --deploy.ftp.password $DEPLOY_PASSWORD --deploy.ftp.dest $DEPLOY_DEST --deploy.ftp.ssh
+  - gulp deploy.ftp -- --deploy.ftp.host $DEPLOY_HOST --deploy.ftp.user $DEPLOY_USER --deploy.ftp.password $DEPLOY_PASSWORD --deploy.ftp.dest $DEPLOY_DEST --deploy.ftp.ssh
