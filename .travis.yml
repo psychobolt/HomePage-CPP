@@ -41,4 +41,7 @@ cache:
   directories: node_modules
 
 script:
-  - npm run test
+  - npm run build.prod -- --base $APP_BASE
+
+deploy:
+  - npm run deploy.ftp -- --deploy.ftp.host $DEPLOY_HOST --deploy.ftp.user $DEPLOY_USER --deploy.ftp.password $DEPLOY_PASSWORD --deploy.ftp.dest $DEPLOY_DEST --deploy.ftp.ssh

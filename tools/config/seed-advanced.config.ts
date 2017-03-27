@@ -62,6 +62,7 @@ export class SeedAdvancedConfig extends SeedConfig {
     this.BOOTSTRAP_FACTORY_PROD_MODULE = `${this.BOOTSTRAP_DIR}${bootstrap}.prod`;
 
     this.APP_TITLE = 'Angular Seed Advanced';
+    var APP_BASE = this.APP_BASE;
     this.APP_BASE = ''; // paths must remain relative
 
     // Advanced seed packages
@@ -180,5 +181,7 @@ export class SeedAdvancedConfig extends SeedConfig {
     /** Production **/
 
     delete this.SYSTEM_BUILDER_CONFIG['packageConfigPaths']; // not all libs are distributed the same
+
+    this.APP_BASE = APP_BASE || '';
   }
 }
