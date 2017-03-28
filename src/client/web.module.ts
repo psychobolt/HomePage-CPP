@@ -23,6 +23,7 @@ import { MultilingualModule, translateLoaderFactory } from './app/shared/i18n/mu
 import { MultilingualEffects } from './app/shared/i18n/index';
 import { SampleModule } from './app/shared/sample/sample.module';
 import { NameListEffects } from './app/shared/sample/index';
+import { FIREBASE } from './app/shared/blog/index';
 
 // config
 import { Config, WindowService, ConsoleService } from './app/shared/core/index';
@@ -65,6 +66,12 @@ if (String('<%= BUILD_TYPE %>') === 'dev') {
   ];
 }
 
+var firebasePlugin = require('firebase');
+
+export function firebaseFactory() {
+  return firebasePlugin.firebase;
+}
+
 @NgModule({
   imports: [
     BrowserModule,
@@ -92,6 +99,9 @@ DEV_IMPORTS,
     {
       provide: APP_BASE_HREF,
       useValue: '<%= APP_BASE %>'
+    },
+    { 
+      provide: FIREBASE, useFactory: (firebaseFactory)
     }
   ],
   bootstrap: [AppComponent]

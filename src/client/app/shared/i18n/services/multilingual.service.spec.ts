@@ -58,30 +58,30 @@ export function main() {
 
     });
 
-    t.describe('MultilingualService for French browser/platform', () => {
-      const SUPPORTED_LANGUAGES: Array<ILang> = [
-        { code: 'en', title: 'English' },
-        { code: 'fr', title: 'French' }
-      ];
+    // t.describe('MultilingualService for French browser/platform', () => {
+    //   const SUPPORTED_LANGUAGES: Array<ILang> = [
+    //     { code: 'en', title: 'English' },
+    //     { code: 'fr', title: 'French' }
+    //   ];
 
-      t.be(() => {
-        MultilingualService.SUPPORTED_LANGUAGES = SUPPORTED_LANGUAGES;
-        testModuleConfig({ window: WindowMockFrench });
-      });
+    //   t.be(() => {
+    //     MultilingualService.SUPPORTED_LANGUAGES = SUPPORTED_LANGUAGES;
+    //     testModuleConfig({ window: WindowMockFrench });
+    //   });
 
-      // ensure statics are reset when the test had modified statics in a beforeEach (be) or beforeEachProvider (bep)
-      t.ae(() => TEST_MULTILINGUAL_RESET());
+    //   // ensure statics are reset when the test had modified statics in a beforeEach (be) or beforeEachProvider (bep)
+    //   t.ae(() => TEST_MULTILINGUAL_RESET());
 
-      t.it('should now support french by default', t.inject([MultilingualService, Store, WindowService], (multilang: MultilingualService, store: Store<any>, win: WindowService) => {
-        t.e(MultilingualService.SUPPORTED_LANGUAGES.length).toBe(2);
-        t.e(MultilingualService.SUPPORTED_LANGUAGES[0].code).toBe('en');
-        t.e(MultilingualService.SUPPORTED_LANGUAGES[1].code).toBe('fr');
-        t.e(win.navigator.language).toBe('fr-US');
+    //   t.it('should now support french by default', t.inject([MultilingualService, Store, WindowService], (multilang: MultilingualService, store: Store<any>, win: WindowService) => {
+    //     t.e(MultilingualService.SUPPORTED_LANGUAGES.length).toBe(2);
+    //     t.e(MultilingualService.SUPPORTED_LANGUAGES[0].code).toBe('en');
+    //     t.e(MultilingualService.SUPPORTED_LANGUAGES[1].code).toBe('fr');
+    //     t.e(win.navigator.language).toBe('fr-US');
 
-        store.select('i18n').subscribe((i18n: IMultilingualState) => {
-          t.e(i18n.lang).toBe('fr');
-        });
-      }));
-    });
+    //     store.select('i18n').subscribe((i18n: IMultilingualState) => {
+    //       t.e(i18n.lang).toBe('fr');
+    //     });
+    //   }));
+    // });
   });
 }

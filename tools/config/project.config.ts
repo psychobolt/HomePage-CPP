@@ -1,6 +1,6 @@
 import { join } from 'path';
 import { SeedAdvancedConfig } from './seed-advanced.config';
-// import { ExtendPackages } from './seed.config.interfaces';
+import { ExtendPackages } from './seed.config.interfaces';
 
 /**
  * This class extends the basic seed configuration, allowing for project specific overrides. A few examples can be found
@@ -39,6 +39,14 @@ export class ProjectConfig extends SeedAdvancedConfig {
     // }];
     //
     // this.addPackagesBundles(additionalPackages);
+
+    let additionalPackages: ExtendPackages[] = [{
+      name: 'firebase',
+      // Path to the package's bundle
+      path: 'node_modules/firebase/firebase.js'
+    }];
+  
+    this.addPackagesBundles(additionalPackages);
 
     /* Add to or override NPM module configurations: */
     // this.mergeObject(this.PLUGIN_CONFIGS['browser-sync'], { ghostMode: false });

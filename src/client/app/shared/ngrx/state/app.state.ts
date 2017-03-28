@@ -41,6 +41,8 @@ import * as fromMultilingual from '../../i18n/index';
 import { IMultilingualState } from '../../i18n/index';
 import * as fromSample from '../../sample/index';
 import { ISampleState } from '../../sample/index';
+import * as fromBlog from '../../blog/index';
+import { IBlogState } from '../../blog/index';
 
 /**
  * As mentioned, we treat each reducer like a table in a database. This means
@@ -48,7 +50,7 @@ import { ISampleState } from '../../sample/index';
  */
 export interface IAppState {
   i18n: fromMultilingual.IMultilingualState;
-  sample: fromSample.ISampleState;
+  blog: fromBlog.IBlogState;
 };
 
 /**
@@ -77,9 +79,11 @@ export function AppReducer(state: any, action: any) {
 export function getMultilingualState(state$: Observable<IAppState>): Observable<IMultilingualState> {
   return state$.select(s => s.i18n);
 }
-export function getNameListState(state$: Observable<IAppState>): Observable<ISampleState> {
-  return state$.select(s => s.sample);
+
+export function getBlogState(state$: Observable<IAppState>): Observable<IBlogState> {
+  return state$.select(s => s.blog);
 }
 
 export const getLang: any = compose(fromMultilingual.getLang, getMultilingualState);
-export const getNames: any = compose(fromSample.getNames, getNameListState);
+export const getPosts: any = compose(fromBlog.getPosts, getBlogState);
+export const getGuestbook: any = compose(fromBlog.getGuestbook, getBlogState);
