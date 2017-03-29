@@ -23,6 +23,7 @@ import { MultilingualModule, translateLoaderFactory } from './app/shared/i18n/mu
 import { MultilingualEffects } from './app/shared/i18n/index';
 import { SampleModule } from './app/shared/sample/sample.module';
 import { NameListEffects } from './app/shared/sample/index';
+import { BlogModule } from './app/shared/blog/blog.module';
 import { FIREBASE } from './app/shared/blog/index';
 
 // config
@@ -87,6 +88,7 @@ export function firebaseFactory() {
       useFactory: (translateLoaderFactory)
     }]),
     SampleModule,
+    BlogModule,
     StoreModule.provideStore(AppReducer),
 DEV_IMPORTS,
     EffectsModule.run(MultilingualEffects),

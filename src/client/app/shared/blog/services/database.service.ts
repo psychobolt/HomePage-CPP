@@ -1,11 +1,20 @@
+// angular
 import {Injectable, Inject, NgZone} from '@angular/core';
-import {FIREBASE} from '../../blog/index';
+
+// libs
+import { Observer } from 'rxjs/Observer';
+import { Observable } from 'rxjs/Observable';
+
+// app
+import { FIREBASE } from '../../blog/index';
 
 @Injectable()
 export class DatabaseService {
+
   private database:any;
   private onSync:Function;
   private userID:string;
+
   constructor(@Inject(FIREBASE) firebase:any, private ngZone: NgZone) {
     console.log('Constructing DatabaseService');
     // Initialize Firebase
@@ -20,21 +29,29 @@ export class DatabaseService {
     this.database = firebase.database();
   }
 
-  sync(path: string, onValueReceived: Function):void {
-    this.database.ref(path).on('value', (snapshot:any) => {
-      this.ngZone.run(() => {
-        onValueReceived(snapshot.val());
+  sync(path: string): Observable<any> {
+    return Observable.create((observer: Observer<any>) => {
+      this.database.ref(path).on('value', snapshot => {
+        this.ngZone.run(() => {
+          observer.next(snapshot.val());
+          observer.complete();
+        });
       });
     });
   }
 
-  addChild(path: string, data:any, callback?:Function):void {
-    this.database.ref(path).push(data, (err:any) => {
-      if (callback && !err) {
-        this.ngZone.run(() => {
-          callback();
-        });
-      }
+  addChild(path: string, data: any): Observable<any> {
+    return Observable.create((observer: Observer<any>) => {
+      this.database.ref(path).push(data, err => {
+        if (err) {
+          observer.error(err);
+        } else {
+          this.ngZone.run(() => {
+            observer.next(data);
+            observer.complete();
+          });
+        }
+      });
     });
   }
 }

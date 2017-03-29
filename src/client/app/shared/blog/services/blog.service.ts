@@ -8,7 +8,7 @@ import { Observable } from 'rxjs/Observable';
 // app
 import { Analytics, AnalyticsService } from '../../analytics/index';
 import { CATEGORY } from '../common/category.common';
-import { IPost } from '../models';
+import { IPost, IComment } from '../models';
 import { DatabaseService } from '../services';
 
 // module
@@ -26,7 +26,27 @@ export class BlogService extends Analytics {
     this.category = CATEGORY;
   }
 
-  // getPosts(): Observable<Array<IPost>> {
-  //   return this.database.sync('posts').
-  // }
+  getPosts(): Observable<Array<IPost>> {
+    return this.database.sync('posts').map(response => {
+      let posts = Array<IPost>();
+      if (response) {
+        for (let key of Object.keys(response)) {
+          posts = [... posts, Object.assign({}, response[key], {id: key})];
+        }
+      }
+      return posts;
+    });
+  }
+
+  getGuestbook(): Observable<Array<IComment>> {
+    return this.database.sync('guestbook').map(response => {
+      let guestbook = Array<IComment>();
+      if (response) {
+        for (let key of Object.keys(response)) {
+          guestbook = [... guestbook, Object.assign({}, response[key], {id: key})];
+        }
+      }
+      return guestbook;
+    });
+  }
 }
