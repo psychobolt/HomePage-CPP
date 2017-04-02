@@ -6,10 +6,10 @@ import { Observer } from 'rxjs/Observer';
 import { Observable } from 'rxjs/Observable';
 
 // app
-import { FIREBASE } from '../../blog/index';
+import { FIREBASE } from '../index';
 
 @Injectable()
-export class DatabaseService {
+export class FirebaseService {
 
   private database:any;
   private onSync:Function;
@@ -22,6 +22,7 @@ export class DatabaseService {
       apiKey: 'AIzaSyCpp-BYOsxv8Wg_mzA0YGSExcigEIZSiGo',
       authDomain: 'blog-59395.firebaseapp.com',
       databaseURL: 'https://blog-59395.firebaseio.com',
+      projectId: 'blog-59395',
       storageBucket: 'blog-59395.appspot.com',
       messagingSenderId: '1009904600836'
     };

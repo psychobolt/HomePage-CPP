@@ -62,7 +62,8 @@ export interface IAppState {
  */
 const reducers = {
   i18n: fromMultilingual.reducer,
-  sample: fromSample.reducer
+  sample: fromSample.reducer,
+  blog: fromBlog.reducer
 };
 
 const developmentReducer: ActionReducer<IAppState> = compose(storeFreeze, combineReducers)(reducers);

@@ -2,7 +2,7 @@
 import { NgModule } from '@angular/core';
 import { APP_BASE_HREF } from '@angular/common';
 import { BrowserModule } from '@angular/platform-browser';
-import { RouterModule } from '@angular/router';
+import { RouterModule, RouteReuseStrategy } from '@angular/router';
 import { Http } from '@angular/http';
 
 // libs
@@ -10,10 +10,12 @@ import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { TranslateLoader } from '@ngx-translate/core';
+import { MarkdownModule } from 'angular2-markdown';
 
 // app
 import { APP_COMPONENTS, AppComponent } from './app/components/index';
 import { routes } from './app/components/app.routes';
+import { CustomReuseStrategy } from './app/components/reuse-strategy';
 
 // feature modules
 import { CoreModule } from './app/shared/core/core.module';
@@ -24,7 +26,9 @@ import { MultilingualEffects } from './app/shared/i18n/index';
 import { SampleModule } from './app/shared/sample/sample.module';
 import { NameListEffects } from './app/shared/sample/index';
 import { BlogModule } from './app/shared/blog/blog.module';
-import { FIREBASE } from './app/shared/blog/index';
+import { BlogEffects } from './app/shared/blog/index';
+import { DatabaseModule } from './app/shared/database/database.module';
+import { FIREBASE } from './app/shared/database/index';
 
 // config
 import { Config, WindowService, ConsoleService } from './app/shared/core/index';
@@ -87,12 +91,15 @@ export function firebaseFactory() {
       deps: [Http],
       useFactory: (translateLoaderFactory)
     }]),
+    MarkdownModule.forRoot(),
     SampleModule,
+    DatabaseModule,
     BlogModule,
     StoreModule.provideStore(AppReducer),
 DEV_IMPORTS,
     EffectsModule.run(MultilingualEffects),
-    EffectsModule.run(NameListEffects)
+    EffectsModule.run(NameListEffects),
+    EffectsModule.run(BlogEffects)
   ],
   declarations: [
     APP_COMPONENTS
@@ -101,6 +108,9 @@ DEV_IMPORTS,
     {
       provide: APP_BASE_HREF,
       useValue: '<%= APP_BASE %>'
+    },
+    {
+      provide: RouteReuseStrategy, useClass: CustomReuseStrategy
     },
     { 
       provide: FIREBASE, useFactory: (firebaseFactory)

@@ -3,8 +3,9 @@ import { NgModule, Optional, SkipSelf } from '@angular/core';
 import { RouterModule } from '@angular/router';
 
 // app
-import { BLOG_PROVIDERS } from './services';
-import { AnalyticsService } from '../analytics';
+import { DatabaseModule } from '../database/database.module';
+import { BLOG_PROVIDERS } from './services/index';
+import { AnalyticsService } from '../analytics/index';
 
 /**
  * Do not specify providers for modules that might be imported by a lazy loaded module.
@@ -12,7 +13,8 @@ import { AnalyticsService } from '../analytics';
 
 @NgModule({
   imports: [
-    RouterModule
+    RouterModule,
+    DatabaseModule
   ],
   providers: [
     BLOG_PROVIDERS

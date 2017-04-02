@@ -17,12 +17,14 @@ import * as blog from '../../shared/blog/index';
 export class HomeComponent implements OnInit {
 
   public guestbook$: Observable<any>;
+  public posts$: Observable<any>;
   public newComment: string;
 
   constructor(private store: Store<IAppState>, public routerext: RouterExtensions) {}
 
   ngOnInit() {
     this.guestbook$ = this.store.let(getGuestbook);
+    this.posts$ = this.store.let(getPosts);
     this.newComment = '';
   }
 

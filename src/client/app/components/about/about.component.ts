@@ -30,4 +30,11 @@ export class AboutComponent {
     //   this.page.actionBarHidden = true;
     // }
   }
+
+  ngOnInit() {
+    var win:any = window;
+    win.LIRenderAll();
+    var widget = new win.GitHubCard();
+    widget.init();
+  }
 }

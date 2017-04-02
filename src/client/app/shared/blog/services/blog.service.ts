@@ -8,8 +8,8 @@ import { Observable } from 'rxjs/Observable';
 // app
 import { Analytics, AnalyticsService } from '../../analytics/index';
 import { CATEGORY } from '../common/category.common';
-import { IPost, IComment } from '../models';
-import { DatabaseService } from '../services';
+import { IPost, IComment } from '../models/index';
+import { FirebaseService } from '../../database/services/index';
 
 // module
 import { IBlogState } from '../states/index';
@@ -18,7 +18,7 @@ import { IBlogState } from '../states/index';
 export class BlogService extends Analytics {
 
   constructor(
-    public database: DatabaseService,
+    public database: FirebaseService,
     public analytics: AnalyticsService,
     private store: Store<IBlogState>,
   ) {
@@ -48,5 +48,15 @@ export class BlogService extends Analytics {
       }
       return guestbook;
     });
+  }
+
+  signGuestbook(content: string): Observable<IComment> {
+    let date = Date.now();
+    let comment: IComment = {
+      content,
+      published_date: date,
+      updated_date: date
+    };
+    return this.database.addChild('guestbook', comment).map(() => comment);
   }
 }

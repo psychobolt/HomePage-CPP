@@ -1,15 +1,17 @@
-import {OpaqueToken} from '@angular/core';
-
-export const FIREBASE: OpaqueToken = new OpaqueToken('firebase');
-
 // actions
-export * from './actions';
+export * from './actions/index';
+
+// effects
+export * from './effects/index';
 
 // services
-export * from './services';
-
-// state
-export * from './states';
+export * from './services/index';
 
 // models
-export * from './models';
+export * from './models/index';
+
+// reducers
+export * from './reducers/index';
+
+// state
+export * from './states/index';
