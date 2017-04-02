@@ -1,23 +1,20 @@
-<h2>
-  {{ 'LOVE_TECH' | translate }} <div class="smile"></div>
-</h2>
+<h3>{{ 'POSTS' | translate }}</h3>
 
-<p>
-  {{'ABOUT_REWARD' | translate}}
-</p>
-<p>
-  {{'ABOUT_ADD' | translate}}
-</p>
+<ul>
+  <li *ngFor="let post of (posts$ | async)">
+      <h2>{{post.title}}</h2>
+      <p>{{'PUBLISHED' | translate}}: {{post.published_date | date: 'short'}}</p>
+      <p Markdown>{{post.content}}</p>
+  </li>
+</ul>
 
-<form (submit)="addName()">
-  <input [(ngModel)]="newName" name="newName" [placeholder]="'INPUT_HINT' | translate">
-  <button type="submit">{{'ADD_BTN_TEXT' | translate}}</button>
+<!--<p>{{'ABOUT_SAY' | translate}}</p>
+
+<form (submit)="addComment()">
+  <textarea [(ngModel)]="newComment" name="newComment" [placeholder]="'INPUT_HINT' | translate"></textarea>
+  <button type="submit">{{'SAY_BTN_TEXT' | translate}}</button>
 </form>
 
 <ul>
-  <li *ngFor="let name of (names$ | async)">{{name}}</li>
-</ul>
-
-<p>
-  <a class="link" (click)="readAbout()">About - RouterExtensions example</a>
-</p>
+  <li *ngFor="let comment of (guestbook$ | async)">{{comment.content}}</li>
+</ul>-->

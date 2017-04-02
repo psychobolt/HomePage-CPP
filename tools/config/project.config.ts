@@ -1,6 +1,6 @@
 import { join } from 'path';
 import { SeedAdvancedConfig } from './seed-advanced.config';
-// import { ExtendPackages } from './seed.config.interfaces';
+import { ExtendPackages } from './seed.config.interfaces';
 
 /**
  * This class extends the basic seed configuration, allowing for project specific overrides. A few examples can be found
@@ -12,7 +12,7 @@ export class ProjectConfig extends SeedAdvancedConfig {
   
   constructor() {
     super();
-    // this.APP_TITLE = 'Put name of your app here';
+    this.APP_TITLE = 'Michael Tran\'s Webspace';
 
     /* Enable typeless compiler runs (faster) between typed compiler runs. */
     // this.TYPED_COMPILE_INTERVAL = 5;
@@ -20,7 +20,9 @@ export class ProjectConfig extends SeedAdvancedConfig {
     // Add `NPM` third-party libraries to be injected/bundled.
     this.NPM_DEPENDENCIES = [
       ...this.NPM_DEPENDENCIES,
-      // {src: 'jquery/dist/jquery.min.js', inject: 'libs'},
+      // {src: 'jquery/dist/jquery.min.js', inject: 'libs'}
+      {src: 'github-profile-card/dist/gh-profile-card.min.js', inject: 'libs'},
+      {src: 'github-profile-card/dist/gh-profile-card.min.css', inject: true},
     ];
 
     // Add `local` third-party libraries to be injected/bundled.
@@ -39,6 +41,17 @@ export class ProjectConfig extends SeedAdvancedConfig {
     // }];
     //
     // this.addPackagesBundles(additionalPackages);
+
+    let additionalPackages: ExtendPackages[] = [{
+      name: 'firebase',
+      // Path to the package's bundle
+      path: 'node_modules/firebase/firebase.js'
+    }, {
+      name: 'angular2-markdown',
+      path: 'node_modules/angular2-markdown/bundles/angular2-markdown.umd.min.js'
+    }];
+  
+    this.addPackagesBundles(additionalPackages);
 
     /* Add to or override NPM module configurations: */
     // this.mergeObject(this.PLUGIN_CONFIGS['browser-sync'], { ghostMode: false });

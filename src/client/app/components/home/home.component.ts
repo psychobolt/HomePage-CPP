@@ -5,8 +5,8 @@ import { Observable } from 'rxjs/Observable';
 
 // app
 import { RouterExtensions, Config } from '../../shared/core/index';
-import { IAppState, getNames } from '../../shared/ngrx/index';
-import * as nameList from '../../shared/sample/index';
+import { IAppState, getGuestbook, getPosts } from '../../shared/ngrx/index';
+import * as blog from '../../shared/blog/index';
 
 @Component({
   moduleId: module.id,
@@ -15,23 +15,26 @@ import * as nameList from '../../shared/sample/index';
   styleUrls: ['home.component.css']
 })
 export class HomeComponent implements OnInit {
-  public names$: Observable<any>;
-  public newName: string;
+
+  public guestbook$: Observable<any>;
+  public posts$: Observable<any>;
+  public newComment: string;
 
   constructor(private store: Store<IAppState>, public routerext: RouterExtensions) {}
 
   ngOnInit() {
-    this.names$ = this.store.let(getNames);
-    this.newName = '';
+    this.guestbook$ = this.store.let(getGuestbook);
+    this.posts$ = this.store.let(getPosts);
+    this.newComment = '';
   }
 
   /*
    * @param newname  any text as input.
    * @returns return false to prevent default form submit behavior to refresh the page.
    */
-  addName(): boolean {
-    this.store.dispatch(new nameList.AddAction(this.newName));
-    this.newName = '';
+  addComment(): boolean {
+    this.store.dispatch(new blog.SignGuestbookAction(this.newComment));
+    this.newComment = '';
     return false;
   }
 
